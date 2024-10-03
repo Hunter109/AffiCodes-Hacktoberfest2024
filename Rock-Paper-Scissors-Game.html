@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+        .game-container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .buttons button {
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .buttons button:hover {
+            background-color: #ddd;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+        <h1>Rock, Paper, Scissors</h1>
+        <div class="buttons">
+            <button id="rock">Rock</button>
+            <button id="paper">Paper</button>
+            <button id="scissors">Scissors</button>
+        </div>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        // Get the buttons and result element
+        const rockBtn = document.getElementById('rock');
+        const paperBtn = document.getElementById('paper');
+        const scissorsBtn = document.getElementById('scissors');
+        const resultDiv = document.getElementById('result');
+
+        // Add event listeners to buttons
+        rockBtn.addEventListener('click', () => playGame('rock'));
+        paperBtn.addEventListener('click', () => playGame('paper'));
+        scissorsBtn.addEventListener('click', () => playGame('scissors'));
+
+        // Play the game
+        function playGame(playerChoice) {
+            const computerChoice = getComputerChoice();
+            const winner = getWinner(playerChoice, computerChoice);
+            displayResult(playerChoice, computerChoice, winner);
+        }
+
+        // Generate random choice for the computer
+        function getComputerChoice() {
+            const choices = ['rock', 'paper', 'scissors'];
+            const randomIndex = Math.floor(Math.random() * 3);
+            return choices[randomIndex];
+        }
+
+        // Determine the winner
+        function getWinner(player, computer) {
+            if (player === computer) {
+                return 'draw';
+            } else if (
+                (player === 'rock' && computer === 'scissors') ||
+                (player === 'paper' && computer === 'rock') ||
+                (player === 'scissors' && computer === 'paper')
+            ) {
+                return 'player';
+            } else {
+                return 'computer';
+            }
+        }
+
+        // Display the result
+        function displayResult(playerChoice, computerChoice, winner) {
+            if (winner === 'draw') {
+                resultDiv.innerHTML = `It's a draw! You both chose ${playerChoice}.`;
+            } else if (winner === 'player') {
+                resultDiv.innerHTML = `You win! ${playerChoice} beats ${computerChoice}.`;
+            } else {
+                resultDiv.innerHTML = `You lose! ${computerChoice} beats ${playerChoice}.`;
+            }
+        }
+    </script>
+</body>
+</html>
